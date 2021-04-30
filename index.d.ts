@@ -160,23 +160,6 @@ declare module 'binance-api-node' {
     }
   }
 
-  export interface AccountSnapshot {
-    code: number
-    msg: string
-    snapshotVos: {
-      data: {
-        balances: {
-          asset: string
-          free: number
-          locked: number
-        }[]
-        totalAssetOfBtc: number
-      }
-      type: string
-      updateTime: number
-    }[]
-  }
-
   export type GetOrderOptions =
     | { symbol: string; orderId: number }
     | { symbol: string; origClientOrderId: string }
@@ -245,7 +228,7 @@ declare module 'binance-api-node' {
   export interface Binance {
     getInfo(): GetInfo
     accountInfo(options?: { useServerTime: boolean }): Promise<Account>
-    tradeFee(options?: { useServerTime: boolean }): Promise<TradeFeeResult>
+    tradeFee(): Promise<TradeFeeResult>
     aggTrades(options?: {
       symbol: string
       fromId?: string
@@ -306,12 +289,6 @@ declare module 'binance-api-node' {
       name?: string
     }): Promise<WithrawResponse>
     assetDetail(): Promise<AssetDetail>
-    accountSnapshot(options: {
-      type: string
-      startTime?: number
-      endTime?: number
-      limit?: number
-    }): Promise<AccountSnapshot>
     withdrawHistory(options: {
       asset: string
       status?: number
@@ -360,14 +337,14 @@ declare module 'binance-api-node' {
     futuresOrder(options: NewOrder): Promise<Order>
     futuresCancelOrder(options: {
       symbol: string
-      orderId: number
+	  origClientOrderId?: string
       useServerTime?: boolean
     }): Promise<CancelOrderResult>
     futuresOpenOrders(options: {
       symbol?: string
       useServerTime?: boolean
     }): Promise<QueryOrderResult[]>
-    futuresPositionRisk(options?: { recvWindow: number }): Promise<PositionRiskResult[]>
+    futuresPositionRisk(options: { symbol: string, recvWindow?: number }): Promise<PositionRiskResult[]>
     futuresAccountBalance(options?: { recvWindow: number }): Promise<FuturesBalanceResult[]>
     futuresAccountInfo(options?: { recvWindow: number }): Promise<FuturesAccountInfoResult>
     futuresPositionMode(options?: { recvWindow: number }): Promise<PositionModeResult>
@@ -435,14 +412,6 @@ declare module 'binance-api-node' {
     marginIsolatedTransferHistory(
       options: marginIsolatedTransferHistory,
     ): Promise<marginIsolatedTransferHistoryResponse>
-    marginMyTrades(options: {
-      symbol: string
-      isIsolated?: string
-      startTime?: number
-      endTime?: number
-      limit?: number
-      fromId?: number
-    }): Promise<MyTrade[]>
   }
 
   export interface HttpError extends Error {
@@ -668,7 +637,7 @@ declare module 'binance-api-node' {
     sideEffectType?: SideEffectType
     reduceOnly?: string
     activationPrice?: string
-    callbackRate?: string
+		callbackRate?: string
   }
 
   export interface NewOcoOrder {
@@ -748,6 +717,7 @@ declare module 'binance-api-node' {
     | 'STOP_MARKET'
     | 'TAKE_PROFIT_MARKET'
     | 'TRAILING_STOP_MARKET'
+  
 
   export type ListOrderStatus = 'EXECUTING' | 'ALL_DONE' | 'REJECT'
 
