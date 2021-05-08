@@ -431,6 +431,10 @@ declare module 'binance-api-node' {
       callback: (depth: Depth) => void,
       transform?: boolean,
     ) => ReconnectingWebSocketHandler
+    futuresCustomSubStream: (
+      pair: string | string[],
+      callback: (data: any) => void,
+    ) => ReconnectingWebSocketHandler
     futuresDepth: (
       pair: string | string[],
       callback: (depth: Depth) => void,
