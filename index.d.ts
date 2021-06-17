@@ -482,7 +482,7 @@ declare module 'binance-api-node' {
       callback: (msg: OutboundAccountInfo | ExecutionReport) => void,
     ) => Promise<ReconnectingWebSocketHandler>
     futuresUser: (
-      callback: (msg: OutboundAccountInfo | ExecutionReport | AccountUpdate) => void,
+      callback: (msg: OutboundAccountInfo | ExecutionReport | AccountUpdate | OrderTradeUpdate) => void,
     ) => Promise<ReconnectingWebSocketHandler>
   }
 
@@ -933,6 +933,42 @@ declare module 'binance-api-node' {
     eventReasonType: string
     balances: Balance[]
     positions: Position[]
+  }
+
+  export interface OrderTradeUpdate {
+    eventType: 'ORDER_TRADE_UPDATE',
+	eventTime: number
+	transactionTime: number
+	symbol: string
+	clientOrderId: string
+	side: string
+	orderType: string
+	timeInForce: string
+	quantity: string
+	price: string
+	averagePrice: string
+	stopPrice: string
+	executionType: string
+	orderStatus: string
+	orderId: string
+	lastTradeQuantity: string
+	totalTradeQuantity: string
+	priceLastTrade: string
+	commissionAsset: string
+	commission: string
+	orderTime: number
+	tradeId: number
+	bidsNotional: string
+	asksNotional: string
+	isMaker: boolean
+	isReduceOnly: boolean
+	workingType: string
+	originalOrderType: string
+	positionSide: string
+	closePosition: boolean
+	activationPrice: string
+	callbackRate: string
+	realizedProfit: string
   }
 
   export interface TradeResult {
