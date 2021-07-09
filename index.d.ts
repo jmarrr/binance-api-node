@@ -461,6 +461,11 @@ declare module 'binance-api-node' {
       period: string,
       callback: (ticker: Candle) => void,
     ) => ReconnectingWebSocketHandler
+	futuresCandles: (
+		pair: string | string[],
+		period: string,
+		callback: (ticker: Candle) => void,
+	  ) => ReconnectingWebSocketHandler
     trades: (
       pairs: string | string[],
       callback: (trade: WSTrade) => void,
@@ -641,7 +646,7 @@ declare module 'binance-api-node' {
     sideEffectType?: SideEffectType
     reduceOnly?: string
     activationPrice?: string
-		callbackRate?: string
+	callbackRate?: string
   }
 
   export interface NewOcoOrder {
