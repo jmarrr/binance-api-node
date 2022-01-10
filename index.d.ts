@@ -431,6 +431,10 @@ declare module 'binance-api-node' {
 		callback: (depth: Depth) => void,
 		transform?: boolean,
 	  ) => ReconnectingWebSocketHandler
+	  customSubStream: (
+		  pair: string | string[],
+		  callback: (data: any) => void,
+	  ) => ReconnectingWebSocketHandler
 	  futuresCustomSubStream: (
 		pair: string | string[],
 		callback: (data: any) => void,
@@ -633,6 +637,7 @@ declare module 'binance-api-node' {
 	  newClientOrderId?: string
 	  price?: string
 	  quantity?: string
+	  quoteOrderQty?: string
 	  recvWindow?: number
 	  side: OrderSide
 	  stopPrice?: string
